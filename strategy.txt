@@ -1,0 +1,65 @@
+Different strategy to be consider/ tried alr :
+1. Frame stacking:
+    will take some past frame as input 
+    --> help know the direction it is going orignally
+
+2. action chunking:
+    will output a lot future action
+
+3. temporal ensembling 
+    with the use of action chunking, but then it only take a step after predict 100 step 
+    will update the new step after seeing all input averaging
+
+4. Loss:
+    L1/MSE/cross entropy loss/ Smooth L1
+
+5. Optimizer:
+    Adam/ AdamW
+
+6. Object detection with keypoint encoding:
+    input the block location (bx,by) & target location (tx,ty) of frame 0 from dataset and the same numebr applied to whole dataset 
+    keypoint encodring will help use this obejct detection on prob p of the dataset each time
+    --> so it dont fully rely on the object detection number 
+
+7. gru (RNN)
+    can remeber the past memory 
+    --> need long time to run (no parallel run)
+
+8. action binning 
+    turns the output moving angles... into "bins" --> predict using classification 
+    --> avoid mode averaging where the robot only go to a averaged place
+    --> use CE loss if use this 
+
+9. Colour jitter
+    will randomly change the saturation , brightness, hue .. in the dataset 
+    --> help adapt in different lighting condition 
+
+10. spatial softmax layer + 1x1 conv layer 
+    preserve 2d spatial information
+
+11. dropout layer 
+    prevent overfit
+
+12. frozen resnet 
+    preserve general feature learned in pre-training
+    aka transfer learning
+
+13. fine-tuned resnet + frozen batchnorm layer
+
+14. CVAE encoder 
+    --> help avoid mode averaging 
+    --> parallel run --> faster
+    --> compress target action sequence and current joint states into latent variable z
+
+15. 2d position embedding
+    --> preserve 2d feature 
+
+16. random drop out top camera 
+    --> so force the model to learn more from wrist camera
+
+17. transformer decoder 
+    have cross attention and self attention 
+
+18. Multiple attention head 
+    capture all important feature 
+    able to focus on one feature in each head
